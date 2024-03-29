@@ -2,7 +2,7 @@ window.onload = function() {
     var sphereContainer = document.querySelector('.headerEffect');
     var sphereContainerWidth = sphereContainer.offsetWidth;
     var minSphereSize = 15;
-    var maxSphereSize = 50;
+    var maxSphereSize = 70;
     var numberOfSpheres = Math.ceil(sphereContainerWidth / minSphereSize); // Use minSphereSize to ensure enough spheres are created
 
     var sphereTemplate = document.querySelector('.sphere');
@@ -14,14 +14,21 @@ window.onload = function() {
         sphereContainer.appendChild(sphere);
     }
 }
-
 function animateSphere(sphere, minSize, maxSize) {
     var randomSize = Math.random() * (maxSize - minSize) + minSize; // Generate a random number between minSize and maxSize
-    var randomDelay = Math.random() * 5; // Generate a random number between 0 and 2
+    var randomDelay = Math.random() * 2; // Generate a random number between 0 and 2
+    var randomDuration = Math.random() * (5 - 2) + 2; // Generate a random number between 2 and 5
     sphere.style.width = randomSize + 'px'; // Apply the random size to the width of the sphere
     sphere.style.height = randomSize + 'px'; // Apply the random size to the height of the sphere
     sphere.style.position = 'relative';
-    sphere.style.animation = `moveUpDown 3s ease-in-out ${randomDelay}s infinite alternate`; // Add CSS animation with random delay
+    sphere.style.animation = `moveUpDown ${randomDuration}s ease-in-out ${randomDelay}s infinite alternate`; // Add CSS animation with random delay and duration
+
+    // Change the size of the sphere at the end of each animation iteration
+    sphere.addEventListener('animationiteration', function() {
+        var newSize = Math.random() * (maxSize - minSize) + minSize; // Generate a new random size
+        sphere.style.width = newSize + 'px'; // Apply the new size to the width of the sphere
+        sphere.style.height = newSize + 'px'; // Apply the new size to the height of the sphere
+    });
 }
 
 // CSS for the animation
